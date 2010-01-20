@@ -1,0 +1,3 @@
+#labels screenshot
+= Screenshots Yii-user =
+http://2mx.org/screenshots/screenshots.jpg
