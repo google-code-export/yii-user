@@ -1,0 +1,14 @@
+#labels Installation
+= Installation =
+ * Unpack files in your project (replace UserIdentity.php and LoginForm.php)
+ * Insert to config/main.php 
+{{{
+'components'=>array(
+#...
+	'User'=>array(
+	    'class' => 'User',
+	),
+#...
+),
+}}}
+ * Create table User (dump file mysql.sql)
