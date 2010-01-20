@@ -1,4 +1,4 @@
-#labels Features
+#labels Featured
 = Features of Yii-User =
  * Login from User Name or Email
  * Registration
