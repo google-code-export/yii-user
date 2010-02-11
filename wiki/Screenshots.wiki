@@ -1,6 +1,5 @@
 #labels screenshot,Featured
-#sidebar TableOfContents
-<wiki:toc max_depth="3" />
+#sidebar <wiki:toc max_depth="3" />
 
 = Screenshots Yii-user =
 
