@@ -1,4 +1,32 @@
 #labels screenshot,Featured
 #sidebar TableOfContents
+<wiki:toc max_depth="3" />
+
 = Screenshots Yii-user =
-http://2mx.org/projects/yii-user/screenshots/screenshots-0.1-alpha.jpg
+
+== Login ==
+http://2mx.org/projects/yii-user/screenshots/login.png
+
+== Registration User ==
+http://2mx.org/projects/yii-user/screenshots/registration.png
+
+== Profile ==
+http://2mx.org/projects/yii-user/screenshots/profile.png
+
+=== Edit Profile ==
+http://2mx.org/projects/yii-user/screenshots/edit_profile.png
+
+=== Change Password ===
+http://2mx.org/projects/yii-user/screenshots/change_password.png
+
+== Users List ==
+http://2mx.org/projects/yii-user/screenshots/users_list.png
+
+== Manage Users ==
+http://2mx.org/projects/yii-user/screenshots/manage_users.png
+
+=== Manage Profile Fields ===
+http://2mx.org/projects/yii-user/screenshots/manage_profile_fields.png
+
+== Recovery Password ==
+http://2mx.org/projects/yii-user/screenshots/recovery_password.png
