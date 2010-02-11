@@ -1,6 +1,6 @@
 #labels Installation,Featured
 = Installation =
- * Unpack files in your project (replace UserIdentity.php and LoginForm.php)
+ * Unpack files in your project (replace UserIdentity.php)
  * Insert to config/main.php 
 {{{
 'components'=>array(
@@ -11,4 +11,10 @@
 #...
 ),
 }}}
- * Create table User (dump file mysql.sql)
+ * Create tables (dump files schema.mysql.sql and schema.sqlite.sql)
+
+= Login =
+
+Default users:
+ * admin/admin
+ * demo/demo
