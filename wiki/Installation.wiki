@@ -1,6 +1,6 @@
 #labels Installation,Featured
 = Installation =
- * Unpack files in your project (replace UserIdentity.php)
+ * Unpack files in your project (replace !UserIdentity.php)
  * Insert to config/main.php 
 {{{
 'components'=>array(
