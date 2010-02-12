@@ -8,4 +8,3 @@
 Defaullt users (login/password): 
  * admin/admin
  * demo/demo
- * test/test
