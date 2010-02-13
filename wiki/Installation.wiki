@@ -18,3 +18,19 @@
 Default users:
  * admin/admin
  * demo/demo
+
+= Configuration =
+{{{
+'User'=>array(
+	'class' => 'User',
+	'hash' => 'md5',                                     # encrypting method (php hash function)
+	'sendActivationMail' => true,                        # send activation email
+	'loginNotActiv' => false,                            # allow access for non-activated users
+	'autoLogin' => true,                                 # automatically login from registration
+	'registrationUrl' => array('user/registration'),     # registration path
+	'recoveryUrl' => array('user/recovery'),             # recovery password path
+	'loginUrl' => array('user/login'),                   # login form path
+	'returnUrl' => array('user/profile'),                # page after login
+	'returnLogoutUrl' => array('user/login'),            # page after logout
+),
+}}}
