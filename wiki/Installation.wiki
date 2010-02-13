@@ -12,6 +12,13 @@
 ),
 }}}
  * Create tables (dump files schema.mysql.sql and schema.sqlite.sql)
+ * Insert items in to zii.widgets.CMenu array
+{{{
+array('label'=>Yii::t("user", "Login"), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
+array('label'=>Yii::t("user", "Registration"), 'url'=>array('/user/registration'), 'visible'=>Yii::app()->user->isGuest),
+array('label'=>Yii::t("user", "Profile"), 'url'=>array('/user/profile'), 'visible'=>!Yii::app()->user->isGuest),
+array('label'=>Yii::t("user", "Logout"), 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest),
+}}}
 
 = Login =
 
