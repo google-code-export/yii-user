@@ -1,43 +1,46 @@
+#summary Application Programming Interface
 #labels Phase-Implementation,Featured
-= Installation =
- * Unpack files in your project (replace !UserIdentity.php)
- * Insert to config/main.php 
+
+= User data =
+@param user id not required (default return current user)<br>
+@return user object or false
 {{{
-'components'=>array(
-#...
-	'User'=>array(
-	    'class' => 'User',
-	),
-#...
-),
-}}}
- * Create tables (dump files schema.mysql.sql and schema.sqlite.sql)
- * Insert items in to zii.widgets.CMenu array (protected/views/layouts/main.php)
-{{{
-array('label'=>Yii::t("user", "Login"), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
-array('label'=>Yii::t("user", "Registration"), 'url'=>array('/user/registration'), 'visible'=>Yii::app()->user->isGuest),
-array('label'=>Yii::t("user", "Profile"), 'url'=>array('/user/profile'), 'visible'=>!Yii::app()->user->isGuest),
-array('label'=>Yii::t("user", "Logout").' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest),
+$userObject = Yii::app()->getModule('user')->user(); // Public Properties: id, username, email, createtime, lastvisit and profile relation
+$profileObject = $userObject->profile;               // Your custom fields (Default: firstname, lastname, about)
 }}}
 
-= Login =
-
-Default users:
- * admin/admin
- * demo/demo
-
-= Configuration =
+= Is admin =
+@return true or false
 {{{
-'User'=>array(
-	'class' => 'User',
-	'hash' => 'md5',                                     # encrypting method (php hash function)
-	'sendActivationMail' => true,                        # send activation email
-	'loginNotActiv' => false,                            # allow access for non-activated users
-	'autoLogin' => true,                                 # automatically login from registration
-	'registrationUrl' => array('user/registration'),     # registration path
-	'recoveryUrl' => array('user/recovery'),             # recovery password path
-	'loginUrl' => array('user/login'),                   # login form path
-	'returnUrl' => array('user/profile'),                # page after login
-	'returnLogoutUrl' => array('user/login'),            # page after logout
-),
+Yii::app()->getModule('user')->isAdmin()
+}}}
+
+= Access control =
+@return array syperusers names
+{{{
+Yii::app()->getModule('user')->getAdmins()
+}}} 
+
+== Example controller ==
+{{{
+	public function accessRules()
+	{
+		return array(
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view'),
+				'users'=>array('*'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update'),
+				'users'=>array('@'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete'),
+				'users'=>Yii::app()->getModule('user')->getAdmins(),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'),
+			),
+		);
+	}
 }}}
