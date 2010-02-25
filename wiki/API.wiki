@@ -1,0 +1,44 @@
+#summary Application Programming Interface
+
+= User data =
+@return user object or false
+{{{
+$userObject = Yii::app()->getModule('user')->user(); // id, username, email, createtime, lastvisit and profile relation
+$profileObject = $userObject->profile;               // Your custom fields (Default: firstname, lastname, about)
+}}}
+
+= Is admin =
+@return true or false
+{{{
+Yii::app()->getModule('user')->isAdmin()
+}}}
+
+= Access control =
+@return array syperusers names
+{{{
+Yii::app()->getModule('user')->getAdmins()
+}}} 
+
+== Example controller ==
+{{{
+	public function accessRules()
+	{
+		return array(
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view'),
+				'users'=>array('*'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update'),
+				'users'=>array('@'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete'),
+				'users'=>Yii::app()->getModule('user')->getAdmins(),
+			),
+			array('deny',  // deny all users
+				'users'=>array('*'),
+			),
+		);
+	}
+}}}
