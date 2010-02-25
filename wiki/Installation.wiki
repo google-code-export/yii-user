@@ -1,46 +1,55 @@
-#summary Application Programming Interface
 #labels Phase-Implementation,Featured
-
-= User data =
-@param user id not required (default return current user)<br>
-@return user object or false
+= Installation =
+ * Unpack files in your project/protected/modules (replace !UserIdentity.php)
+ * Insert to config/main.php 
 {{{
-$userObject = Yii::app()->getModule('user')->user(); // Public Properties: id, username, email, createtime, lastvisit and profile relation
-$profileObject = $userObject->profile;               // Your custom fields (Default: firstname, lastname, about)
+return array(
+#...
+	'modules'=>array(
+		'user',
+	),
+#...
+	// application components
+	'components'=>array(
+#...
+		'user'=>array(
+			// enable cookie-based authentication
+			'allowAutoLogin'=>true,
+			'loginUrl' => array('/user/login'),
+		),
+#...
+	),
+#...
+);
+}}}
+ * Create tables (dump files schema.mysql.sql and schema.sqlite.sql)
+ * Insert items in to zii.widgets.CMenu array (protected/views/layouts/main.php)
+{{{
+array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
+array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Registration"), 'visible'=>Yii::app()->user->isGuest),
+array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>Yii::app()->getModule('user')->t("Profile"), 'visible'=>!Yii::app()->user->isGuest),
+array('url'=>Yii::app()->getModule('user')->logoutUrl, 'label'=>Yii::app()->getModule('user')->t("Logout").' ('.Yii::app()->user->name.')', 'visible'=>!Yii::app()->user->isGuest),
 }}}
 
-= Is admin =
-@return true or false
-{{{
-Yii::app()->getModule('user')->isAdmin()
-}}}
+= Login =
 
-= Access control =
-@return array syperusers names
-{{{
-Yii::app()->getModule('user')->getAdmins()
-}}} 
+Default users:
+ * admin/admin
+ * demo/demo
 
-== Example controller ==
+= Configuration =
 {{{
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>Yii::app()->getModule('user')->getAdmins(),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
+	'modules'=>array(
+		'user'=>array(
+			'hash' => 'md5',                                     # encrypting method (php hash function)
+			'sendActivationMail' => true,                        # send activation email
+			'loginNotActiv' => false,                            # allow access for non-activated users
+			'autoLogin' => true,                                 # automatically login from registration
+			'registrationUrl' => array('/user/registration'),    # registration path
+			'recoveryUrl' => array('/user/recovery'),            # recovery password path
+			'loginUrl' => array('/user/login'),                  # login form path
+			'returnUrl' => array('/user/profile'),               # page after login
+			'returnLogoutUrl' => array('/user/login'),           # page after logout
+		),
+	),
 }}}
