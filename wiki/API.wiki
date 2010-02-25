@@ -1,4 +1,5 @@
 #summary Application Programming Interface
+#labels Featured
 
 = User data =
 @param user id not required (default return current user)<br>
