@@ -1,6 +1,6 @@
 #labels Phase-Implementation,Featured
 = Installation =
- * Unpack files in your project/protected/modules (replace !UserIdentity.php)
+ * Unpack files in your project/protected
  * Insert to config/main.php 
 {{{
 return array(
