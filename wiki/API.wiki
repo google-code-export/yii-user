@@ -16,7 +16,7 @@ Yii::app()->getModule('user')->isAdmin()
 }}}
 
 = Access control =
-@return array syperusers names
+@return array superusers names
 {{{
 Yii::app()->getModule('user')->getAdmins()
 }}} 
