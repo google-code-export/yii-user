@@ -1,4 +1,5 @@
 #summary profile fields widgets
+#labels Featured
 
 <wiki:toc max_depth="3" />
 
