@@ -1,9 +1,21 @@
+#summary installation guide
 #labels Phase-Implementation,Featured
+
+<wiki:toc max_depth="3" />
+
 = Installation =
  * Unpack files in your project/protected
  * Insert to config/main.php 
 {{{
 return array(
+#...
+	// autoloading model and component classes
+	'import'=>array(
+		'application.models.*',
+		'application.components.*',
+		'application.modules.user.models.*',
+		'application.modules.user.components.*',
+	),
 #...
 	'modules'=>array(
 		'user',
@@ -37,19 +49,25 @@ Default users:
  * admin/admin
  * demo/demo
 
-= Configuration =
-{{{
-	'modules'=>array(
-		'user'=>array(
-			'hash' => 'md5',                                     # encrypting method (php hash function)
-			'sendActivationMail' => true,                        # send activation email
-			'loginNotActiv' => false,                            # allow access for non-activated users
-			'autoLogin' => true,                                 # automatically login from registration
-			'registrationUrl' => array('/user/registration'),    # registration path
-			'recoveryUrl' => array('/user/recovery'),            # recovery password path
-			'loginUrl' => array('/user/login'),                  # login form path
-			'returnUrl' => array('/user/profile'),               # page after login
-			'returnLogoutUrl' => array('/user/login'),           # page after logout
-		),
-	),
-}}}
+=Module parameters=
+||Property||Type||Description||Default||
+||user_page_size||int||items on page||10||
+||fields_page_sizeint||items on page||10||
+||hash||string||hash method||md5||
+||sendActivationMail||boolean||use email for activation user account||true||
+||loginNotActiv||boolean||allow auth for is not active user||false||
+||activeAfterRegister||boolean||activate user on registration (only $sendActivationMail = false)||false||
+||autoLogin||boolean||login after registration (need loginNotActiv or activeAfterRegister = true)||true||
+||registrationUrl||array||regitration path||array("/user/registration")||
+||recoveryUrl||array||recovery path||array("/user/recovery/recovery")||
+||loginUrl||array||login path||array("/user/login")||
+||logoutUrl||array||logout path||array("/user/logout")||
+||profileUrl||array||profile path||array("/user/profile")||
+||returnUrl||array||return path after login||array("/user/profile")||
+||returnLogoutUrl||array||return path after logout||array("/user/login")||
+||relations||array||User model relation from other models||array()||
+||profileRelations||array||Profile model relation from other models||array()||
+||captcha||array||use captcha||array('registration'=>true)||
+||tableUsers||string||User model table||{{users}}||
+||tableProfiles||string||Profile model table||{{profiles}}||
+||tableProfileFields||string||ProfileField model table||{{profiles_fields}}||
