@@ -1,6 +1,8 @@
 #summary Application Programming Interface
 #labels Featured
 
+<wiki:toc max_depth="3" />
+
 = User data =
 @param user id not required (default return current user)<br>
 @return user object or false
@@ -44,3 +46,6 @@ Yii::app()->getModule('user')->getAdmins()
 		);
 	}
 }}}
+
+
+See [FieldWidget]
