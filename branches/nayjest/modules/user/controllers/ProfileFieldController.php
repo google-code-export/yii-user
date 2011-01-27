@@ -12,12 +12,12 @@ class ProfileFieldController extends Controller
 
 	/**
 	 * @return array action filters
-	 */
-	public function filters()
+	 */	
+  	public function filters()
 	{
-		return array(
+		return CMap::mergeArray(parent::filters(),array(
 			'accessControl', // perform access control for CRUD operations
-		);
+		));                          
 	}
 
 	/**
