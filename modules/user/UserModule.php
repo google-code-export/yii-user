@@ -68,7 +68,13 @@ class UserModule extends CWebModule
 	/**
 	 * @var boolean
 	 */
-	public $captcha = array('registration'=>true);
+	public $captcha = array('registration'=>true);     
+	
+	/**
+	* @var array
+	* @desc Behaviors that needs to be attached to Yii-user components. Expecting array ('<componentClassName>' => <behaviors array>,...)
+	*/
+	public $componentBehaviors=array();
 	
 	/**
 	 * @var boolean
@@ -185,6 +191,21 @@ class UserModule extends CWebModule
 	    $message = str_replace("\n.", "\n..", $message);
 	    return mail($email,'=?UTF-8?B?'.base64_encode($subject).'?=',$message,$headers);
 	}
+	
+	/**
+	* Returns array of behaviors for specified component. 
+	* 
+	* @param string $componentName
+	* @return array
+	*/
+	public function getBehaviorsFor($componentName) {
+		if (isset($this->componentBehaviors[$componentName])) {
+			return $this->componentBehaviors[$componentName];
+		} else {
+			return array();
+	}
+	
+}
 	
 	/**
 	 * Return safe user data.
