@@ -53,16 +53,19 @@ class Profile extends UActiveRecord
 				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
 				array_push($rules,$field_rule);
 			}
-			if ($field->other_validator) {
-				if (strpos($field->other_validator,'{')===0) {
-					$validator = (array)CJavaScript::jsonDecode($field->other_validator);
-					$field_rule = array($field->varname, key($validator));
-					$field_rule = array_merge($field_rule,(array)$validator[key($validator)]);
-				} else {
-					$field_rule = array($field->varname, $field->other_validator);
-				}
-				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
-				array_push($rules,$field_rule);
+			if ($field->other_validator) {							# Modified by Vitaliy Stepanenko.
+       			$validators=explode(';',$field->other_validator);   # Implemented support of multiple validators,
+				foreach ($validators as $i) {						# separated by ';'
+					if (strpos($field->other_validator,'{')===0) {
+						$validator = (array)CJavaScript::jsonDecode($i);
+						$field_rule = array($field->varname, key($validator));
+						$field_rule = array_merge($field_rule,(array)$validator[key($validator)]);
+					} else {
+						$field_rule = array($field->varname, $i);
+					}
+					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+					array_push($rules,$field_rule);
+                }
 			} elseif ($field->field_type=='DATE') {
 				$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
 				if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
