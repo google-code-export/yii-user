@@ -77,6 +77,14 @@ class UserModule extends CWebModule
 	public $componentBehaviors=array();
 	
 	/**
+	* If value is string, authentification can be done by corresponding profile field instead of login, that must be unique. 
+	* If FALSE, this option will disabled.
+	* 
+	* @var mixed
+	*/
+	public $profileLoginField = false;
+	
+	/**
 	 * @var boolean
 	 */
 	//public $cacheEnable = false;

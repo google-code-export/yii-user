@@ -21,27 +21,41 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
+		$module = Yii::app()->getModule('user');
 		if (strpos($this->username,"@")) {
-			$user=User::model()->notsafe()->findByAttributes(array('email'=>$this->username));
+			$user = User::model()->notsafe()->findByAttributes(array('email'=>$this->username));
+			//$this->username = $user->username
 		} else { 
-			$user=User::model()->notsafe()->findByAttributes(array('username'=>$this->username));
+			$user = null;
+			if ($module->profileLoginField)
+			{
+				$profile = Profile::model()->with('user:notsafe')->findByAttributes(array($module->profileLoginField => $this->username));
+				if ($profile) {
+					$user = $profile->user;
+					$this
+				}				
+			}
+			if(!$user)
+				$user = User::model()->notsafe()->findByAttributes(array('username'=>$this->username));
+
 		}
+		
 		if($user===null)
 			if (strpos($this->username,"@")) {
 				$this->errorCode=self::ERROR_EMAIL_INVALID;
 			} else {
 				$this->errorCode=self::ERROR_USERNAME_INVALID;
 			}
-		else if(Yii::app()->getModule('user')->encrypting($this->password)!==$user->password)
-			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-		else if($user->status==0&&Yii::app()->getModule('user')->loginNotActiv==false)
-			$this->errorCode=self::ERROR_STATUS_NOTACTIV;
-		else if($user->status==-1)
-			$this->errorCode=self::ERROR_STATUS_BAN;
+		else if(Yii::app()->getModule('user')->encrypting($this->password) !== $user->password)
+			$this->errorCode = self::ERROR_PASSWORD_INVALID;
+		else if($user->status == 0 && Yii::app()->getModule('user')->loginNotActiv == false)
+			$this->errorCode = self::ERROR_STATUS_NOTACTIV;
+		else if($user->status == -1)
+			$this->errorCode = self::ERROR_STATUS_BAN;
 		else {
-			$this->_id=$user->id;
-			$this->username=$user->username;
-			$this->errorCode=self::ERROR_NONE;
+			$this->_id = $user->id;
+			$this->username = $user->username;
+			$this->errorCode = self::ERROR_NONE;
 		}
 		return !$this->errorCode;
 	}
