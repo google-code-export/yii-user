@@ -135,7 +135,7 @@ class UserModule extends CWebModule
 	 * @return hash string.
 	 */
 	public static function encrypting($string="") {
-		$hash = Yii::app()->controller->module->hash;
+		$hash = Yii::app()->getModule('user')->hash;
 		if ($hash=="md5")
 			return md5($string);
 		if ($hash=="sha1")
@@ -151,8 +151,8 @@ class UserModule extends CWebModule
 	public static function doCaptcha($place = '') {
 		if(!extension_loaded('gd'))
 			return false;
-		if (in_array($place, Yii::app()->controller->module->captcha))
-			return Yii::app()->controller->module->captcha[$place];
+		if (in_array($place, Yii::app()->getModule('user')->captcha))
+			return Yii::app()->getModule('user')->captcha[$place];
 		return false;
 	}
 	
