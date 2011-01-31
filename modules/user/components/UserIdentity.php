@@ -31,8 +31,7 @@ class UserIdentity extends CUserIdentity
 			{
 				$profile = Profile::model()->with('user:notsafe')->findByAttributes(array($module->profileLoginField => $this->username));
 				if ($profile) {
-					$user = $profile->user;
-					$this
+					$user = $profile->user;					
 				}				
 			}
 			if(!$user)
