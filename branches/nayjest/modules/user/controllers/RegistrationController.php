@@ -39,7 +39,9 @@ class RegistrationController extends Controller
 		    	if(isset($_POST['RegistrationForm'])) {
 					$model->attributes=$_POST['RegistrationForm'];
 					$profile->attributes=$_POST['Profile'];
-					if($model->validate()&&$profile->validate())
+					$modelIsValid = $model->validate();					
+					$profileIsValid = $profile->validate();
+					if($modelIsValid && $profileIsValid)
 					{
 						$soucePassword = $model->password;
 						$model->activkey=UserModule::encrypting(microtime().$model->password);
