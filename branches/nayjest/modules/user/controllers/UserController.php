@@ -6,6 +6,11 @@ class UserController extends Controller
 	 * @var CActiveRecord the currently loaded data model instance.
 	 */
 	private $_model;
+	
+	 /**
+	 * @var string the name of the default action.
+	 */
+	public $defaultAction = 'list';
 
 	/**
 	 * @return array action filters
@@ -18,16 +23,25 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
+	 * Specifies the access control rules.<br>
+	 * This method is used by the 'accessControl' filter.<br>
+	 * See {@link http://www.yiiframework.com/doc/api/1.1/CAccessControlFilter CAccessControlFilter}.
+	 * 
 	 * @return array access control rules
 	 */
 	public function accessRules()
-	{
+	{  
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
+			array('allow',
+				'actions'=>array('list'),
+				'users'=> $this->module->showUserListTo
+			),
+			array('allow',
+				'actions'=>array('view'),
+				'users'=> $this->module->showProfilesTo
+			),
+			array('allow', 			
+				'users'=>UserModule::getAdmins(),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -49,7 +63,7 @@ class UserController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionList()
 	{
 		$dataProvider=new CActiveDataProvider('User', array(
 			'criteria'=>array(
