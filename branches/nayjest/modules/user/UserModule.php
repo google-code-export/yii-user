@@ -93,6 +93,8 @@ class UserModule extends CWebModule
 	public $tableProfiles = '{{profiles}}';
 	public $tableProfileFields = '{{profiles_fields}}';
 	
+	public $defaultController = 'user';
+	
 	static private $_user;
 	static private $_admin;
 	static private $_admins;
