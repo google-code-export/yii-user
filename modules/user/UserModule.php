@@ -85,6 +85,39 @@ class UserModule extends CWebModule
 	public $profileLoginField = false;
 	
 	/**
+	* Specifies, who can see list of registered users.
+	* <p>
+	*    This value will be passed to 
+	*    {@link http://www.yiiframework.com/doc/api/1.1/CAccessControlFilter CAccessControlFilter}
+	* </p>
+	* 
+	* <ul>Possible values:</ul>
+	* 	<li>List of usernames</li> 
+	* 	<li>array('@') → authentificated users</li>
+	* 	<li>array('*') → all users</li>
+	* </ul>
+	* @var array
+	*/
+	public $showUserListTo = array('@');
+	
+	/**
+	* Specifies, who can see user profiles.
+	* <p>
+	*    This value will be passed to 
+	*    {@link http://www.yiiframework.com/doc/api/1.1/CAccessControlFilter CAccessControlFilter}
+	* </p>
+	* 
+	* <ul>Possible values:</ul>
+	* 	<li>List of usernames</li> 
+	* 	<li>array('@') → authentificated users</li>
+	* 	<li>array('*') → all users</li>
+	* </ul>
+	* @var array
+	*/
+	public $showProfilesTo = array('@');
+	
+	
+	/**
 	 * @var boolean
 	 */
 	//public $cacheEnable = false;
