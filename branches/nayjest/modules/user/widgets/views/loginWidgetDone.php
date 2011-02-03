@@ -1,7 +1,7 @@
 <?php 
 	Yii::app()->clientScript
-		->registerCssFile( $assetUrl . 'userLogin.css' )
-		->registerScriptFile( $assetUrl . 'userLogin.js' )    
+		->registerCssFile( $assetUrl . '/userLogin.css' )
+		->registerScriptFile( $assetUrl . '/userLogin.js' )    
 ?>
 
 <div class="login">
