@@ -19,7 +19,7 @@
 /**
 * Login widget for Yii-user
 */
-class LoginWidget extends CWidget {
+class LoginWidget extends CPortlet {
 	
 	/**
 	* List of Urls, on which this widget will be not rendered.
@@ -31,6 +31,33 @@ class LoginWidget extends CWidget {
 		'user/login',
 		'user/profile'
 	);
+	
+	/**
+	* Portlet title, that displays for logged in users.
+	* If you don't need title, set to null.
+    * If you wont to use default module-generated title, set to true.
+	* @var string
+	*/
+	public $loggedInTitle = true;
+	
+	/**
+	* Portlet title, that displays for siteguests.
+	* If you don't need title, set to null.
+    * If you wont to use default module-generated title, set to true.
+	* @var string
+	*/
+	public $guestTitle = true;
+	
+	/**
+    * Portlet title string.
+    * If you don't need title, set to null.
+    * If you wont to use $loggedInTitle and $guestTitle, set to true.
+    * 
+    * @var string
+    */
+	public $title = true;
+	
+	private $_module;
 	
 	/**
 	* Checks that current Url is not in ignore list
@@ -74,26 +101,47 @@ class LoginWidget extends CWidget {
 		);             
 	}
 
+	public function init() {
+		$this->_module		=	Yii::app()->getModule('user');	# Call this before using any other classes from Yii-user
+		                                                		# to provide import of all needed classes in UserModule::init()
+		if ($this->title === true) {
+			if (Yii::app()->user->isGuest) {
+				if ($this->guestTitle === true) {
+					$this->guestTitle = UserModule::t('Login');
+				}
+				$this->title = $this->guestTitle;
+				
+			} else {
+				if ($this->loggedInTitle === true) {
+					$this->loggedInTitle = UserModule::t('Your profile');
+				}
+				$this->title = $this->loggedInTitle;
+			}            
+		}                                                		
+		
+		parent::init();                                                		
+		
+	}
+	
     /**
 	* Executes the widget.
 	* This method is called by {@link CBaseController::endWidget}.
 	*/
-	public function run() 
+	public function renderContent() 
 	{  
 		if (!$this->isCurrentUrlAllowed()) {
 			return;
 		}	
 	    
-		$assetUrl	=	$this->publishAssets();
-		$module		=	Yii::app()->getModule('user');	# Call this before using any other classes from Yii-user
-		$model		=	new UserLogin;					# to provide import of all needed classes in UserModule::init()
+		$assetUrl	=	$this->publishAssets();		
+		$model		=	new UserLogin;					
 		$viewName	=	'loginWidgetForm';		
 		
 		if (Yii::app()->user->isGuest) {            
 			if(isset($_POST['UserLogin'])){
 				$model->attributes = $_POST['UserLogin'];                
 				if($model->validate()) {	
-					$user = $module->user();
+					$user = $this->_module->user();
 					$user->lastvisit = time();
 					$user->save();
 					#Not shure, that we need this code, coz redirecting can be controlled in RBAC system
@@ -107,9 +155,9 @@ class LoginWidget extends CWidget {
 		        
 		$this->render($viewName,array(
 			'model'		=>	$model,
-			'user'		=>	$module->user(),
+			'user'		=>	$this->_module->user(),
 			'assetUrl'	=>	$assetUrl,
-			'module'	=>	$module,
+			'module'	=>	$this->_module,
 		));       
 	}
 }
