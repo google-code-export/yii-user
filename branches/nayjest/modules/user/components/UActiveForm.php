@@ -556,4 +556,10 @@ class UActiveForm extends CWidget
 		}
 		return function_exists('json_encode') ? json_encode($result) : CJSON::encode($result);
 	}
+	
+		
+	public function behaviors()
+	{
+		return Yii::app()->getModule('user')->getBehaviorsFor(get_class($this));
+	}
 }
