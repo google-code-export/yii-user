@@ -143,4 +143,9 @@ class User extends CActiveRecord
 		else
 			return isset($_items[$type]) ? $_items[$type] : false;
 	}
+	
+	public function behaviors()
+	{
+		return Yii::app()->getModule('user')->getBehaviorsFor(get_class($this));
+	}
 }
