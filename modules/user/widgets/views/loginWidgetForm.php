@@ -21,7 +21,7 @@
 	</div>
 	<div class="row">
 	<?php echo	CHtml::activeLabelEx($model,'password'),
-				CHtml::activeTextField($model,'password'),
+				CHtml::activePasswordField($model,'password'),
 				CHtml::error($model,'password') ?>
 	</div>
 
