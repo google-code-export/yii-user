@@ -160,7 +160,8 @@ class ProfileField extends CActiveRecord
 				$newParams = $widgetClass->params;
 				$arr = (array)CJavaScript::jsonDecode($arr);
 				foreach ($arr as $p=>$v) {
-					if (isset($newParams[$p])) $newParams[$p] = $v;
+					//if (isset($newParams[$p])) 
+					$newParams[$p] = $v;
 				}
 				$widgetClass->params = $newParams;
 			}
