@@ -55,9 +55,9 @@ class UWjuidate {
 	public function editAttribute($model,$field,$htmlOptions=array()) {
 		if (!isset($htmlOptions['size'])) $htmlOptions['size'] = 60;
 		if (!isset($htmlOptions['maxlength'])) $htmlOptions['maxlength'] = (($field->field_size)?$field->field_size:10);
-		if (!isset($htmlOptions['id'])) $htmlOptions['id'] = $field->varname;
-		
+		if (!isset($htmlOptions['id'])) $htmlOptions['id'] = $field->varname;		
 		$id = $htmlOptions['id'];
+		$options = $this->params;
 		$options['dateFormat'] = 'yy-mm-dd';
 		$options=CJavaScript::encode($options);
 		
