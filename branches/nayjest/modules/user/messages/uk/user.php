@@ -12,7 +12,7 @@ return array(
 	'username or email' => 'Логін або email',
 	'password' => 'Пароль',
 	'Remember me next time' => 'Запам\'ятати мене',
-	'Username is incorrect.' => 'Користувач з таким ім\'ям вже зареєструвався',
+	'Username is incorrect.' => 'Користувача з таким ім\'ям не існує.',
 	'Email is incorrect.' => 'Користувач з такою електронною адресою не зареєструвався',
 	"This user's name already exists." => 'Користувач з таким ім\'ям вже зареєструвався',
 	"This user's email adress already exists." => 'Користувач з такою електронною адресою вже зареєструвався.',
