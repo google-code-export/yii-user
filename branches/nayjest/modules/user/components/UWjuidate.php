@@ -57,8 +57,7 @@ class UWjuidate {
 		if (!isset($htmlOptions['maxlength'])) $htmlOptions['maxlength'] = (($field->field_size)?$field->field_size:10);
 		if (!isset($htmlOptions['id'])) $htmlOptions['id'] = $field->varname;		
 		$id = $htmlOptions['id'];
-		$options = $this->params;
-		$options['dateFormat'] = 'yy-mm-dd';
+		$options = $this->params;		
 		$options=CJavaScript::encode($options);
 		
 		$basePath=Yii::getPathOfAlias('application.modules.user.views.asset');
